@@ -8,7 +8,7 @@ pipeline {
 
     parameters {
         booleanParam(name: 'isTags', defaultValue: true, description: 'lancer avec tous les tags?')
-        choice(name: 'rouaa', choices: ['smoke', 'tnr', 'regression'], description: 'Choisir un tag ?')
+        choice(name: 'TAG', choices: ['smoke', 'tnr', 'regression'], description: 'Choisir un tag ?')
 
      }
     stages {
@@ -28,7 +28,7 @@ pipeline {
                     if(params.isTags == true){
                         sh "npx playwright test"
                     }else {
-                        sh "npx playwright test --grep '${params.rouaa}'"
+                        sh "npx playwright test --grep '${params.TAG}'"
                     }
                 }
             }
