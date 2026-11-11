@@ -1,11 +1,18 @@
 pipeline {
     agent {
         docker{
-            image 'mcr.microsoft.com/playwright:v1.65.0-jammy'
+            image '
+mcr.microsoft.com/playwright:v1.65.0-jammy
+'
             args '-u root --entrypoint='
         }
     }
 
+    parameters {
+        booleanParam(name: 'isTags', defaultValue: true, description: 'lancer avec tous les tags?')
+        choice(name: 'rouaa', choices: ['smoke', 'tnr', 'regression'], description: 'Choisir un tag ?')
+
+     }
     stages {
          stage('Check version nodejs') {
             steps {
@@ -15,14 +22,20 @@ pipeline {
         stage('installation dependances') {
             steps {
                 sh 'npm install'
-
             }
         }
         stage('Lancer le test') {
             steps {
-                sh 'npx playwright test'
+                script{
+                    if(params.isTags == true){
+                        sh "npx playwright test"
+                    }else {
+                        sh "npx playwright test --grep '${params.rouaa}'"
+                    }
+                }
             }
         }
+       
        
          
     }
