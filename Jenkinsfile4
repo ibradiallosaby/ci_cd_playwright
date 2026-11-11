@@ -39,7 +39,8 @@ pipeline {
 
                       sh "npx playwright test --project=${params.brows}" 
                     }
-                    else 
+                    
+                    if(params.isTags == true && params.isBrowser == true)
                     {
                          sh "npx playwright test --grep '${params.TAG}' --project=${params.brows}"
                         
