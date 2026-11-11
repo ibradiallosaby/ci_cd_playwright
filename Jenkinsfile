@@ -1,7 +1,7 @@
 pipeline {
     agent {
         docker{
-            image 'mcr.microsoft.com/playwright:latest'
+            image 'mcr.microsoft.com/playwright:v1.65.0-jammy'
             args '-u root --entrypoint='
         }
     }
@@ -14,8 +14,8 @@ pipeline {
         }
         stage('installation dependances') {
             steps {
-                sh 'npm install @playwright/test '
-                sh 'npx playwright install'
+                sh 'npm install'
+
             }
         }
         stage('Lancer le test') {
